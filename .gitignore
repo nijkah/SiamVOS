@@ -10,3 +10,4 @@ debugging*/
 *.pth/
 *.png/
 */*.json/
+.vscode/
