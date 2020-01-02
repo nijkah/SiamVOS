@@ -1,4 +1,4 @@
-# End-to-End Siamese Fully Convolutional Network for Video Object Segmentation with Bounding Box
+# End-to-End Trainable Fully-Convolutional Siamese Networks for Video Object Segmentation with Bounding Box
 
 This is an implementation of SiamVOS in pytorch.
 
@@ -11,7 +11,7 @@ All the code has been tested on Ubuntu18.04, python3.6, Pytorch1.2.0, CUDA 9.0, 
 
 - Clone the repository
 ```
-git clone https://github.com/nijkah/SiamVOS.git && cd masktrack_box
+git clone https://github.com/nijkah/SiamVOS.git && cd SiamVOS
 ```
 
 - Setup python environment
@@ -48,9 +48,9 @@ You can download the trained SiamVOS model from
 Put this in the 'data/snapshots' folder.
 
 ## Results
-|         Model         | DAVIS2016 mean IoU |
-|:---------------------:|:------------------:|
-| Paper (MaskTrack_box) |        69.6        |
-| SiamVOS (fine-tuning) |        65.4        |
+|         Model         | DAVIS2016 mean IoU | DAVIS2017  |
+|:---------------------:|:------------------:|:----------:|
+| SiamMask [(paper)](https://arxiv.org/abs/1812.05050)      |        71.7        |    51.1    |
+| SiamVOS               |        73.2        |    52.4    |
 
 

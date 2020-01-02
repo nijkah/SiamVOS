@@ -1,0 +1,12 @@
+data/*
+scripts/Result*
+scripts/debugging*
+*.pyc
+__pycache__/
+Result*/
+results/
+runs/
+debugging*/
+*.pth/
+*.png/
+*/*.json/

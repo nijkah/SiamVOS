@@ -5,6 +5,16 @@ import matplotlib.pyplot as plt
 from collections import OrderedDict
 import cv2
 
+def get_box(mask, scale=1.0):
+    bb = scale_box(mask, scale)
+    box = np.zeros([*mask.shape[:2], 1]).astype(float)
+    if bb[0] == 0 and bb[1] == 0 and bb[2] == 0 and bb[3] == 0:
+        return box
+    box[bb[1]:bb[1]+bb[3]+1,bb[0]:bb[0]+bb[2]+1] = 1
+
+    return box
+
+
 def scale_box(mask, scale=1.0):
     mask = mask.squeeze()
     all_ys, all_xs = np.where(mask >= 0.5)
@@ -20,21 +30,6 @@ def scale_box(mask, scale=1.0):
     w = xmax - xmin + 1
 
     return xmin, ymin, w, h
-
-    """
-    xmin, ymin, w, h = bb
-    xmax = xmin + w - 1
-    ymax = ymin + h - 1
-    xmin = int(max(0, xmin-(scale -1)/2.*w))
-    ymin = int(max(0, ymin-(scale -1)/2.*h))
-    xmax = min(ow, xmax+(scale -1)/2.*w)
-    ymax = min(oh, ymax+(scale -1)/2.*h)
-
-    w = int(xmax - xmin + 1)
-    h = int(xmax - xmin + 1)
-
-    return xmin, ymin,  w, h
-    """
 
 def lr_poly(base_lr, iter, max_iter, power):
     return base_lr*((1-float(iter)/max_iter)**(power))
