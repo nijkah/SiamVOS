@@ -6,8 +6,5 @@ __pycache__/
 Result*/
 results/
 runs/
-debugging*/
 *.pth/
 *.png/
-*/*.json/
-.vscode/

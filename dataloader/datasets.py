@@ -8,8 +8,7 @@ import numpy as np
 
 from glob import glob
 import cv2
-#from .custom_transforms_triple import aug_batch
-from dataloader.custom_transforms.trs_triple import aug_batch
+from dataloader.custom_transforms.trs import aug_batch
 from PIL import Image
 
 class DAVIS_eval(data.Dataset):
@@ -75,24 +74,7 @@ class DAVIS_eval(data.Dataset):
         oh_masks = np.zeros((self.num_frames[video],)+self.shape[video]+(num_objects,), dtype=np.uint8)
         for o in range(num_objects):
             oh_masks[:,:,:,o] = (raw_masks == (o+1)).astype(np.uint8)
-
-
-        """
-        # padding size to be divide by 32
-        nf, h, w, _ = oh_masks.shape
-        new_h = h + 32 - h % 32 new_w = w + 32 - w % 32
-        # print(new_h, new_w)
-        lh, uh = (new_h-h) / 2, (new_h-h) / 2 + (new_h-h) % 2
-        lw, uw = (new_w-w) / 2, (new_w-w) / 2 + (new_w-w) % 2
-        lh, uh, lw, uw = int(lh), int(uh), int(lw), int(uw)
-        pad_masks = np.pad(oh_masks, ((0,0),(lh,uh),(lw,uw),(0,0)), mode='constant')
-        pad_frames = np.pad(raw_frames, ((0,0),(lh,uh),(lw,uw),(0,0)), mode='constant')
-        info['pad'] = ((lh,uh),(lw,uw))
-
-        th_frames = torch.unsqueeze(torch.from_numpy(np.transpose(pad_frames, (3, 0, 1, 2)).copy()).float(), 0)
-        th_masks = torch.unsqueeze(torch.from_numpy(np.transpose(pad_masks, (3, 0, 1, 2)).copy()).long(), 0)
-        """
-
+        
         # (t, h, w, c) - >  (t, n, c, h, w)
         th_frames = torch.unsqueeze(torch.from_numpy(np.transpose(raw_frames, (0, 3, 1, 2)).copy()).float(), 1)
         th_masks = torch.unsqueeze(torch.from_numpy(np.transpose(oh_masks, (0, 3, 1, 2)).copy()).long(), 1)
@@ -114,9 +96,6 @@ class YVOS_eval(data.Dataset):
         for _video in sorted(videos):
             self.videos.append(_video)
             self.num_frames[_video] = len(glob(os.path.join(self.image_dir, _video, '*.jpg')))
-            #mask_name = os.listdir(os.path.join(self.mask_dir, _video))[0]
-            #_mask = np.array(Image.open(os.path.join(self.mask_dir, _video, mask_name)).convert("P"))
-            #self.num_objects[_video] = np.max(_mask)
             mask_names = os.listdir(os.path.join(self.mask_dir, _video))
             _masks = [np.array(Image.open(os.path.join(self.mask_dir, _video, f)).convert("P")).max() for f in mask_names]
             self.num_objects[_video] = max(_masks)
@@ -142,32 +121,13 @@ class YVOS_eval(data.Dataset):
         raw_frames = np.empty((len(valid_frames),)+self.shape[video]+(3,), dtype=np.float32)
         mask_files = [os.path.join(self.mask_dir, video, f) for f in masks]  #allways return first frame mask
         raw_masks = [np.array(Image.open(i).convert('P'), dtype=np.uint8) for i in mask_files]
-        #raw_frames = np.empty((self.num_frames[video],)+self.shape[video]+(3,), dtype=np.float32)
-        #raw_masks = np.empty((self.num_frames[video],)+self.shape[video], dtype=np.uint8)
         info['masks_name'] = {k:np.unique(v) for k,v in zip(masks, raw_masks)}
 
-        #frames_name = os.listdir(os.path.join(self.image_dir, video))
-        #for f in range(self.num_frames[video]):
         for i, f in enumerate(valid_frames):
             img_file = os.path.join(self.image_dir, video, f+'.jpg')
             raw_frames[i] = np.array(Image.open(img_file).convert('RGB'))/255.
 
-            """
-            try:
-                mask_file = os.path.join(self.mask_dir, video, f+'.png')  #allways return first frame mask
-                raw_mask = np.array(Image.open(mask_file).convert('P'), dtype=np.uint8)
-            except:
-                mask_file = os.path.join(self.mask_dir, video, frames_name[0]+'.png')
-                raw_mask = np.array(Image.open(mask_file).convert('P'), dtype=np.uint8)
-
-            raw_masks[i] = raw_mask
-            """
-
             
-        ## make One-hot channel is object index
-        #oh_masks = np.zeros((self.num_frames[video],)+self.shape[video]+(self.num_objects[video],), dtype=np.uint8)
-        #for o in range(self.num_objects[video]):
-        #    oh_masks[:,:,:,o] = (raw_masks == (o+1)).astype(np.uint8)
         th_masks = list()
         for i in range(len(mask_files)):
             objects = raw_masks[i].max()
@@ -178,13 +138,10 @@ class YVOS_eval(data.Dataset):
             print(th_mask.shape)
             th_masks.append(th_mask)
 
-        #for o in range(self.num_objects[video]):
-        #    oh_masks[:,:,:,o] = (raw_masks[i] == (o+1)).astype(np.uint8)
 
         
         # (t, h, w, c) - >  (t, n, c, h, w)
         th_frames = torch.unsqueeze(torch.from_numpy(np.transpose(raw_frames, (0, 3, 1, 2)).copy()).float(), 1)
-        #th_masks = torch.unsqueeze(torch.from_numpy(np.transpose(oh_masks, (0, 3, 1, 2)).copy()).long(), 1)
         
         return th_frames, th_masks, info
 

@@ -13,17 +13,16 @@ import json
 sys.path.append('..')
 
 from models import siamvos
-from dataloader.datasets_triple import DAVIS2016
+from dataloader.datasets import DAVIS2016
 from tools.utils import *
 
 DAVIS_PATH= '/media/datasets/DAVIS-2016/'
 im_path = os.path.join(DAVIS_PATH, 'JPEGImages/480p')
 gt_path = os.path.join(DAVIS_PATH, 'Annotations/480p')
-SAVED_DICT_PATH = '../data/snapshots/triplet_GC-26000.pth'
-#SAVED_DICT_PATH = '../data/trained_siamvos_fam.pth'
+SAVED_DICT_PATH = '../data/snapshots/trained_SiamVOS-new.pth'
+SAVE_PATH = '../data/eval/'
 
-
-def test_model(model, vis=False, save=True, name='siamvos_GC_t'):
+def test_model(model, vis=False, save=True, name='SiamVOS'):
     model.eval()
     with open(os.path.join(DAVIS_PATH, 'ImageSets/480p', 'val.txt')) as f:
         files = f.readlines()
@@ -46,6 +45,7 @@ def test_model(model, vis=False, save=True, name='siamvos_GC_t'):
             gt_original = cv2.imread(os.path.join(gt_path,i+'.png'),0)
             gt_original[gt_original==255] = 1   
 
+            # For first frame
             if idx == 0:
                 bb = cv2.boundingRect(gt_original)
                 template = img_temp.copy()
@@ -105,7 +105,7 @@ def test_model(model, vis=False, save=True, name='siamvos_GC_t'):
             iou = get_iou(previous, gt_original.squeeze(), 0)
 
             if save:
-                save_path = 'Result_'+name
+                save_path =  os.path.join(SAVE_PATH, name)
                 folder = os.path.join(save_path, i.split('/')[0])
                 if not os.path.isdir(folder):
                     os.makedirs(folder)
@@ -125,7 +125,7 @@ def test_model(model, vis=False, save=True, name='siamvos_GC_t'):
     return tiou/len(val_seqs)
 
 if __name__ == '__main__':
-    model = siamvos.build_siamvos(2, True)
+    model = siamvos.build_siamvos(2)
     state_dict = torch.load(SAVED_DICT_PATH)
     model.load_state_dict(state_dict['model'])
     model = model.cuda()
