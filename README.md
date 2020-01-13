@@ -23,6 +23,11 @@ pip install -r requirments.txt
 ```
 
 - Download data
+[DAVIS-2017](https://davischallenge.org/davis2017/code.html)
+[Youtube-VOS](https://youtube-vos.org/dataset/vos/)
+[GyGO](https://github.com/ilchemla/gygo-dataset)
+and set paths in **cfg.py**
+
 ```
 cd data
 sh download_datasets.sh
