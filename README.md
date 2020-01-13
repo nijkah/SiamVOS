@@ -24,15 +24,13 @@ pip install -r requirments.txt
 
 - Download data
 [DAVIS-2017](https://davischallenge.org/davis2017/code.html)
+
 [Youtube-VOS](https://youtube-vos.org/dataset/vos/)
+
 [GyGO](https://github.com/ilchemla/gygo-dataset)
+
 and set paths in **cfg.py**
 
-```
-cd data
-sh download_datasets.sh
-cd ..
-```
 and you can download the pre-trained deeplab model from
 [here](https://drive.google.com/file/d/0BxhUwxvLPO7TeXFNQ3YzcGI4Rjg/view).
 Put this in the 'data' folder.
