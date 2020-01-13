@@ -16,8 +16,11 @@ sys.path.append('..')
 from models import siamvos
 from dataloader.datasets import DAVIS_eval
 from tools.utils import *
+from cfg import Config
 
-DAVIS_PATH= '/media/datasets/DAVIS/'
+cfg = Config()
+
+DAVIS_PATH= cfg.DAVIS17_PATH
 SAVED_DICT_PATH = '../data/trained_SiamVOS_new.pth'
 palette = Image.open(DAVIS_PATH+ 'Annotations/480p/bear/00000.png').getpalette()
 SAVE_PATH = '../data/eval/'

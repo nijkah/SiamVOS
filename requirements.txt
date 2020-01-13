@@ -1,4 +1,4 @@
 docopt
 matplotlib
 Pillow
-imgaug
+imgaug==0.3.0

@@ -51,6 +51,6 @@ Put this in the 'data/snapshots' folder.
 |         Model         | DAVIS2016 mean IoU | DAVIS2017  |
 |:---------------------:|:------------------:|:----------:|
 | SiamMask [(paper)](https://arxiv.org/abs/1812.05050)      |        71.7        |    51.1    |
-| SiamVOS               |        73.2        |    52.4    |
+| SiamVOS               |        74.3        |    53.2    |
 
 

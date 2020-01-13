@@ -15,8 +15,11 @@ sys.path.append('..')
 from models import siamvos
 from dataloader.datasets import DAVIS2016
 from tools.utils import *
+from cfg import Config
 
-DAVIS_PATH= '/media/datasets/DAVIS-2016/'
+cfg = Config()
+
+DAVIS_PATH= cfg.DAVIS16_PATH
 im_path = os.path.join(DAVIS_PATH, 'JPEGImages/480p')
 gt_path = os.path.join(DAVIS_PATH, 'Annotations/480p')
 SAVED_DICT_PATH = '../data/snapshots/trained_SiamVOS-new.pth'

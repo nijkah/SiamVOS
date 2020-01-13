@@ -9,8 +9,9 @@ class Config(object):
     DEFORM_P = 0.9
     SAVE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
-    DATASET_PATH = '/media/datasets/'
-    DAVIS_PATH = os.path.join(DATASET_PATH, 'DAVIS/')
+    DATASET_PATH = '/data/hakjin-workspace/'
+    DAVIS16_PATH = os.path.join(DATASET_PATH, 'DAVIS/DAVIS-2016/')
+    DAVIS17_PATH = os.path.join(DATASET_PATH, 'DAVIS/DAVIS-2017/')
     VOS_PATH = os.path.join(DATASET_PATH, 'Youtube-VOS/')
     GYGO_PATH = os.path.join(DATASET_PATH, 'GyGO-Dataset')
 

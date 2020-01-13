@@ -14,9 +14,12 @@ from models import siamvos
 from dataloader.datasets import DAVIS2017, YTB_VOS, GyGO
 from scripts.evaluate_siamvos import test_model
 from tools.utils import *
+from cfg import Config
 
-DATASET_PATH = '/media/datasets/'
-DAVIS_PATH = os.path.join(DATASET_PATH, 'DAVIS/')
+cfg = Config()
+
+DATASET_PATH = cfg.DATASET_PATH
+DAVIS_PATH = cfg.DAVIS17_PATH
 VOS_PATH = os.path.join(DATASET_PATH, 'Youtube-VOS/')
 GYGO_PATH = os.path.join(DATASET_PATH, 'GyGO-Dataset')
 
@@ -78,7 +81,7 @@ def main(args):
             out, loss = model(img_search, p_mask, img_prev, img_ref, mask_ref,  label)
 
             numerics['loss'].append(float(loss.data.cpu().numpy()))
-            print('iter = ',iter, 'of',args.maxIter,'completed, loss = ', (loss.data.cpu().numpy()), end=' ')
+            print('iter: ',iter, 'of',args.maxIter,'completed, loss: ', (loss.data.cpu().numpy()), end=', ')
         
             if iter % 5 == 0 and args.vis:
                 vis_2(img_search[0], p_mask[0], img_ref[0], mask_ref[0], label[0], out[0], iter)
@@ -87,7 +90,7 @@ def main(args):
             loss.backward()
             optimizer.step()
 
-            print('(poly lr policy) lr:',lr)
+            print('(poly) lr:',lr)
 
             # Update optimizer
             lr = lr_poly(args.lr, iter, args.maxIter,0.9)

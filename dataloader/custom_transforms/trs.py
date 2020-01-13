@@ -83,7 +83,7 @@ def aug_batch(img_ref, gt_ref, img_search, gt_search, no_crop=False):
     if bb[2] != 0 and bb[3] != 0:
         for i in range(5):
             seq_ref_det = seq_ref.to_deterministic()
-            gt_ref= ia.SegmentationMapOnImage(gt_ref_o, shape=gt_ref.shape, nb_classes=2)
+            gt_ref= ia.SegmentationMapsOnImage(gt_ref_o, shape=gt_ref.shape)
             gt_ref_map = seq_ref_det.augment_segmentation_maps([gt_ref])[0]
             mask_ref  = gt_ref_map.get_arr_int().astype('uint8')
             mask_ref = seq_deform.augment_segmentation_maps([gt_ref_map])[0].get_arr_int().astype(float)
@@ -113,22 +113,21 @@ def aug_batch(img_ref, gt_ref, img_search, gt_search, no_crop=False):
     for i in range(10):
         seq_search_det = seq_search.to_deterministic()
 
-        gt_search = ia.SegmentationMapOnImage(gt_search_o, shape=gt_search_o.shape, nb_classes=2)
+        gt_search = ia.SegmentationMapsOnImage(gt_search_o, shape=gt_search_o.shape)
         gt_search_map = seq_search_det.augment_segmentation_maps([gt_search])[0]
-        gt_search = gt_search_map.get_arr_int().astype('uint8')
+        gt_search = gt_search_map.get_arr().astype('uint8')
         bb = cv2.boundingRect(gt_search)
         if bb[2] > 10 and bb[3] > 10:
             img_search = seq_search_det.augment_image(img_search_o)
             break
     else:
         img_search = cv2.resize(img_search_o, (dim, dim))
-        gt_search = cv2.resize(gt_search_o, (dim, dim))
-
+        gt_search = np.expand_dims(cv2.resize(gt_search_o, (dim, dim)), 2).astype(float)
         
     # Get previous (mask and frame) == Deform (mask and image)
     for i in range(5):
         seq_deform_det = seq_deform.to_deterministic()
-        p_mask = seq_deform_det.augment_segmentation_maps([gt_search_map])[0].get_arr_int().astype(float)
+        p_mask = seq_deform_det.augment_segmentation_maps([gt_search_map])[0].get_arr().astype(float)
         bb = cv2.boundingRect(p_mask.astype('uint8'))
         if bb[2] > 10 and bb[3] > 10:
             img_prev = seq_deform_det.augment_image(img_search.copy())
@@ -154,7 +153,7 @@ def aug_batch(img_ref, gt_ref, img_search, gt_search, no_crop=False):
         bb = cv2.boundingRect(aug.astype('uint8'))
         p_mask[bb[1]:bb[1]+bb[3]+1, bb[0]:bb[0]+bb[2]+1, 0] = 1
 
-    gt_search = np.expand_dims(gt_search, 2).astype(float)
+    #gt_search = gt_search.astype(float)
     
     return img_search, p_mask, img_prev, img_ref, mask_ref, gt_search
 
