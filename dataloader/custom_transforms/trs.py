@@ -85,8 +85,8 @@ def aug_batch(img_ref, gt_ref, img_search, gt_search, no_crop=False):
             seq_ref_det = seq_ref.to_deterministic()
             gt_ref= ia.SegmentationMapsOnImage(gt_ref_o, shape=gt_ref.shape)
             gt_ref_map = seq_ref_det.augment_segmentation_maps([gt_ref])[0]
-            mask_ref  = gt_ref_map.get_arr_int().astype('uint8')
-            mask_ref = seq_deform.augment_segmentation_maps([gt_ref_map])[0].get_arr_int().astype(float)
+            mask_ref  = gt_ref_map.get_arr().astype('uint8')
+            mask_ref = seq_deform.augment_segmentation_maps([gt_ref_map])[0].get_arr().astype(float)
 
             #scale_p = random.uniform(0.8, 1.2)
             bb = scale_box(mask_ref)
@@ -143,9 +143,9 @@ def aug_batch(img_ref, gt_ref, img_search, gt_search, no_crop=False):
     aug_p = random.uniform(0, 1)
     iter = random.randint(1, 5)
     if aug_p > 0.5:
-        aug = np.expand_dims(cv2.dilate(p_mask, cv2.getStructuringElement(cv2.MORPH_CROSS, (5,5)), iterations=iter), 3)
+        aug = np.expand_dims(cv2.dilate(p_mask, cv2.getStructuringElement(cv2.MORPH_CROSS, (5,5)), iterations=iter), 2)
     else:
-        aug = np.expand_dims(cv2.erode(p_mask, cv2.getStructuringElement(cv2.MORPH_CROSS, (5,5)), iterations=iter), 3)
+        aug = np.expand_dims(cv2.erode(p_mask, cv2.getStructuringElement(cv2.MORPH_CROSS, (5,5)), iterations=iter), 2)
     p_mask = np.zeros([dim, dim, 1])
     if flip_p <= 0.8:
         p_mask[np.where(aug==1)] = 1

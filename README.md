@@ -7,7 +7,7 @@ SiamVOS requires only a bounding box of the target for video object segmentation
 
 
 ## Environment setup
-All the code has been tested on Ubuntu18.04, python3.6, Pytorch1.2.0, CUDA 9.0, GTX TITAN x GPU
+All the code has been tested on Ubuntu18.04, python3.6, Pytorch1.2.0, anaconda2019.03, CUDA 10.0, GTX TITAN x GPU
 
 - Clone the repository
 ```
@@ -17,8 +17,8 @@ git clone https://github.com/nijkah/SiamVOS.git && cd SiamVOS
 - Setup python environment
 ```
 conda create -n SiamVOS python=3.6
-source activate SiamVOS
-conda install pytorch=1.2.0 cuda90 -c pytorch
+conda activate SiamVOS
+conda install pytorch==1.2.0 torchvision==0.4.0 cudatoolkit=10.0 -c pytorch
 pip install -r requirements.txt
 ```
 
