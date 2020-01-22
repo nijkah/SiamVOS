@@ -40,8 +40,7 @@ python train_siamvos.py
 
 - evaluate the model
 ```
-cd evaluatation
-python evaluate.py
+python evaluate_siamvos.py
 ```
 You can download the trained SiamVOS model from
 [here](https://drive.google.com/file/d/1tJELZ_IsP-JK8qyR2AtgeAYiCMtMzoh_/view?usp=sharing).
