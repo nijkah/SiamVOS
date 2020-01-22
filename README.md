@@ -19,25 +19,23 @@ git clone https://github.com/nijkah/SiamVOS.git && cd SiamVOS
 conda create -n SiamVOS python=3.6
 source activate SiamVOS
 conda install pytorch=1.2.0 cuda90 -c pytorch
-pip install -r requirments.txt
+pip install -r requirements.txt
 ```
 
 - Download data
 
-[DAVIS-2017](https://davischallenge.org/davis2017/code.html)
+[DAVIS-2017](https://davischallenge.org/davis2017/code.html) [Youtube-VOS](https://youtube-vos.org/dataset/vos/) [GyGO](https://github.com/ilchemla/gygo-dataset)
 
-[Youtube-VOS](https://youtube-vos.org/dataset/vos/)
-
-[GyGO](https://github.com/ilchemla/gygo-dataset) and set paths in **cfg.py**
+and set paths in **cfg.py**
 
 and you can download the pre-trained deeplab model from
 [here](https://drive.google.com/file/d/0BxhUwxvLPO7TeXFNQ3YzcGI4Rjg/view).
-Put this in the 'data' folder.
+Put this in the **data** folder.
 
 - train the model
 ```
-cd train
-python train.py
+cd scripts
+python train_siamvos.py
 ```
 
 - evaluate the model
@@ -47,7 +45,7 @@ python evaluate.py
 ```
 You can download the trained SiamVOS model from
 [here](https://drive.google.com/file/d/1tJELZ_IsP-JK8qyR2AtgeAYiCMtMzoh_/view?usp=sharing).
-Put this in the 'data/snapshots' folder.
+Put this in the **data/snapshots** folder.
 
 ## Results
 |         Model         | DAVIS2016 mean IoU | DAVIS2017  |

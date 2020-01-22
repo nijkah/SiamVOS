@@ -20,8 +20,11 @@ from models import siamvos
 from dataloader.datasets_triple import DAVIS_eval
 from tools.utils import *
 from scripts.evaluate_siamvos import test_model
+from cfg import Config
 
-DAVIS_PATH= '/media/datasets/DAVIS/'
+cfg = Config()
+
+DAVIS_PATH = cfg.DAVIS17_PATH
 SAVED_DICT_PATH = '../data/snapshots/triplet_GC-26000.pth'
 MODEL_DIR = '../data/losses'
 palette = Image.open(DAVIS_PATH+ 'Annotations/480p/bear/00000.png').getpalette()
