@@ -21,6 +21,11 @@ from cfg import Config
 cfg = Config()
 
 DAVIS_PATH= cfg.DAVIS17_PATH
+# THIS IS BEST 36 + 1
+#SAVED_DICT_PATH = '/data/hakjin-workspace/snapshots/stm_2_sequential-6200.pth'
+# THIS IS SECOND-BEST 40 + 1
+#SAVED_DICT_PATH = '/data/hakjin-workspace/snapshots/stm_2_sequential-6600.pth'
+#SAVED_DICT_PATH = '/data/hakjin-workspace/snapshots/stm_2_sequential-3700.pth'
 SAVED_DICT_PATH = '../data/trained_SiamVOS_new.pth'
 palette = Image.open(DAVIS_PATH+ 'Annotations/480p/bear/00000.png').getpalette()
 SAVE_PATH = '../data/eval/'
@@ -92,7 +97,7 @@ def infer_MO(frames, masks, num_frames, num_objects):
     return predicts
 
 
-def eval(model, testLoader, name='siamvos'):
+def eval(model, testLoader, name='siamvos_best9'):
     model.eval()
     for seq, (frames, masks, info) in enumerate(testLoader):
         seq_name = info['name']

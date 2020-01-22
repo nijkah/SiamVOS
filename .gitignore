@@ -1,6 +1,8 @@
 data/*
 scripts/Result*
 scripts/debugging*
+scripts/*.json
+scripts/runs/
 *.pyc
 __pycache__/
 Result*/

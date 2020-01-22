@@ -22,10 +22,16 @@ cfg = Config()
 DAVIS_PATH= cfg.DAVIS16_PATH
 im_path = os.path.join(DAVIS_PATH, 'JPEGImages/480p')
 gt_path = os.path.join(DAVIS_PATH, 'Annotations/480p')
-SAVED_DICT_PATH = '../data/snapshots/trained_SiamVOS-new.pth'
+#SAVED_DICT_PATH = '../data/trained_SiamVOS_new.pth'
+#SAVED_DICT_PATH = '../data/snapshots/stm_2_sequential-best.pth'
+# THIS IS BEST 36 + 1
+SAVED_DICT_PATH = '/data/hakjin-workspace/snapshots/stm_2_sequential-6200.pth'
+# THIS IS SECOND-BEST 40 + 1
+#SAVED_DICT_PATH = '/data/hakjin-workspace/snapshots/stm_2_sequential-6600.pth'
+#SAVED_DICT_PATH = '/data/hakjin-workspace/snapshots/stm_2_sequential-4800.pth'
 SAVE_PATH = '../data/eval/'
 
-def test_model(model, vis=False, save=True, name='SiamVOS'):
+def test_model(model, vis=False, save=True, name='SiamVOS_seq'):
     model.eval()
     with open(os.path.join(DAVIS_PATH, 'ImageSets/480p', 'val.txt')) as f:
         files = f.readlines()
