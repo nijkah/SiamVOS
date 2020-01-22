@@ -2,3 +2,4 @@ docopt
 matplotlib
 Pillow
 tensorboardX
+imgaug

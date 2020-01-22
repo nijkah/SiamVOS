@@ -21,6 +21,9 @@ conda activate SiamVOS
 conda install pytorch==1.2.0 torchvision==0.4.0 cudatoolkit=10.0 -c pytorch
 pip install -r requirements.txt
 ```
+**NOTICE** imgaug library has an issue on latest numpy=1.8.1,
+so pip install git+https://github.com/aleju/imgaug rather than pip install imgaug
+For more information see [this](https://github.com/aleju/imgaug/issues/537)
 
 - Download data
 
