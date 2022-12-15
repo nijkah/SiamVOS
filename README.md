@@ -46,7 +46,7 @@ python train_siamvos.py
 python evaluate_siamvos.py
 ```
 You can download the trained SiamVOS model from
-[here](https://drive.google.com/file/d/1tJELZ_IsP-JK8qyR2AtgeAYiCMtMzoh_/view?usp=sharing).
+[here](https://github.com/nijkah/SiamVOS/releases/download/v0.1.0/trained_SiamVOS_new.pth).
 Put this in the **data/snapshots** folder.
 
 ## Results
