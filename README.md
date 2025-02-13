@@ -1,6 +1,6 @@
 # End-to-End Trainable Fully-Convolutional Siamese Networks for Video Object Segmentation with Bounding Box
 
-This is an implementation of SiamVOS(My Thesis: End-to-End Trainable Fully-Convolutional Siamese Networks for Video Object Segmentation with Bounding Box) in pytorch.
+This is an implementation of SiamVOS (My Thesis: [End-to-End Trainable Fully-Convolutional Siamese Networks for Video Object Segmentation with Bounding Box](https://repository.hanyang.ac.kr/handle/20.500.11754/123824)) in pytorch.
 
 Compared to conventional semi-supervised video object segmentation methods,
 SiamVOS requires only a bounding box of the target for video object segmentation.
